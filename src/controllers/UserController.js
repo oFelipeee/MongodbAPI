@@ -62,11 +62,30 @@ const UserController = {
 
     // Listando todos os Users:
     getAll: async (req, res) => {
-
+        try {
+            const users = await User.find();
+            return res.status(200).json(users);
+        } catch (error) {
+            return res.status(500).json({
+                msg: 'Contate o suporte'
+            })
+        }
     },
 
     // Listando um User específico:
     getOne: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const user = await User.findById(id);
 
+            return res.status(200).json({
+                msg: 'Usuario encontrado com sucesso',
+                user
+            });
+        } catch (error) {
+            return res.status(500).json({
+                msg: 'Contate o suporte'
+            })
+        }
     }
 }
